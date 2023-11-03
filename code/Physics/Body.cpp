@@ -12,6 +12,7 @@ Body::Body() :
 	m_position(0.0f),
 	m_orientation(0.0f, 0.0f, 0.0f, 1.0f),
 	m_LinearVelocity(0.0f),
+	m_invMass(0),
 	m_shape(nullptr)
 {
 }
@@ -41,4 +42,11 @@ Vec3 Body::BodySpaceToWorldSpace(const Vec3& pt) const
 {
 	Vec3 worldSpace = GetCenterOfMassWorldSpace() + m_orientation.RotatePoint(pt);
 	return worldSpace;
+}
+
+void Body::ApplyLinearImpulse(const Vec3& impulse)
+{
+	if (m_invMass == 0.0f) return;
+
+	m_LinearVelocity += impulse * m_invMass;
 }
