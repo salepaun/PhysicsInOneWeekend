@@ -428,6 +428,10 @@ Application::Keyboard
 ====================================================
 */
 void Application::Keyboard( int key, int scancode, int action, int modifiers ) {
+	
+	if (GLFW_KEY_ESCAPE == key && GLFW_RELEASE == action) {
+		glfwSetWindowShouldClose(m_glfwWindow, 1);
+	}
 	if ( GLFW_KEY_R == key && GLFW_RELEASE == action ) {
 		m_scene->Reset();
 	}
