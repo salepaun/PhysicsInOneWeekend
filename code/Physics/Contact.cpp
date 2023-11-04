@@ -12,11 +12,20 @@ void ResolveContact( contact_t & contact ) {
 	Body* bodyA = contact.bodyA;
 	Body* bodyB = contact.bodyB;
 
-	bodyA->m_LinearVelocity.Zero();
-	bodyB->m_LinearVelocity.Zero();
+	const float invMassA = bodyA->m_invMass;
+	const float invMassB = bodyB->m_invMass;
+	const float invMassSum = invMassA + invMassB;
 
-	const float tA = bodyA->m_invMass / (bodyA->m_invMass + bodyB->m_invMass);
-	const float tB = bodyB->m_invMass / (bodyA->m_invMass + bodyB->m_invMass);
+	const Vec3 normal = contact.normal;
+	const Vec3 vab = bodyA->m_LinearVelocity - bodyB->m_LinearVelocity;
+	const float impulseJ = -2.0f * vab.Dot(normal) / invMassSum;
+	const Vec3 vectorImpulse = normal * impulseJ;
+
+	bodyA->ApplyLinearImpulse(vectorImpulse);
+	bodyB->ApplyLinearImpulse(vectorImpulse * -1.0);
+
+	const float tA = invMassA / (invMassSum);
+	const float tB = invMassB / (invMassSum);
 
 	const Vec3 ds = contact.ptOnB_WorldSpace - contact.ptOnA_WorldSpace;
 	bodyA->m_position += ds * tA;
