@@ -26,6 +26,8 @@ public:
 	float		m_invMass;
 	Shape *		m_shape;
 
+	bool IsStatic() const { return m_invMass == 0.0f; }
+
 	Vec3 GetCenterOfMassWorldSpace() const;
 	Vec3 GetCenterOfMassModelSpace() const;
 
