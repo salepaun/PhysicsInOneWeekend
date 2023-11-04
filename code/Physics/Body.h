@@ -24,6 +24,7 @@ public:
 	Quat		m_orientation;
 	Vec3		m_LinearVelocity;
 	float		m_invMass;
+	float		m_elasticity;
 	Shape *		m_shape;
 
 	bool IsStatic() const { return m_invMass == 0.0f; }

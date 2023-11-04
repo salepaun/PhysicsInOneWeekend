@@ -13,6 +13,7 @@ Body::Body() :
 	m_orientation(0.0f, 0.0f, 0.0f, 1.0f),
 	m_LinearVelocity(0.0f),
 	m_invMass(0),
+	m_elasticity(1),
 	m_shape(nullptr)
 {
 }
